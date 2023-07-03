@@ -1,14 +1,18 @@
+<!--
+ * @Author: baixiaoshengtsc 485434766@qq.com
+ * @Date: 2023-07-03 21:30:08
+ * @LastEditors: baixiaoshengtsc 485434766@qq.com
+ * @LastEditTime: 2023-07-03 22:18:00
+ * @FilePath: \blog-nuxt\pages\index.vue
+ * @Description: 公共组件体
+-->
 <template>
   <div :style="{ overflow: sidebarOut ? 'auto' : 'hidden' }">
     <div class="common-layout" id="common-layout" :class="{ sidebar_in: !sidebarOut, sidebar_out: sidebarOut }">
       <el-container>
         <el-container>
           <el-header>
-            <div class="header">
-              <el-button @click="changeSidebar">切换</el-button>
-              头头头
-            </div>
-            
+            <Header></Header>
           </el-header>
           <el-main>
             <MainContainer></MainContainer>
@@ -18,12 +22,11 @@
       </el-container>
       <ClientOnly>
         <Teleport to="#common-layout">
-          <!-- content -->
           <div class="left-sidebar">
-
+            <Sidebar></Sidebar>
           </div>
 
-          <div class="mask" v-if="!sidebarOut" @click="changeSidebar"></div>
+          <div class="mask" v-if="!sidebarOut" @click="changeSidebarOut"></div>
         </Teleport>
       </ClientOnly>
     </div>
@@ -32,10 +35,8 @@
 
 
 <script lang="ts" setup>
-let sidebarOut = ref<Boolean>(true)
-const changeSidebar = () => {
-  sidebarOut.value = !sidebarOut.value
-}
+import { Operation } from '@element-plus/icons-vue'
+const {sidebarOut, changeSidebarOut} = useSidebar()
 
 </script>
 
@@ -54,11 +55,7 @@ const changeSidebar = () => {
   .el-header {
     padding: 0;
     height: auto;
-    .header {
-      background-color: aquamarine;
-      background: linear-gradient(to bottom right, #99a4c0, #bbcadd);
-      padding: 25px 40px;
-    }
+    
   }
   .el-main {
     --el-main-padding: 0;
