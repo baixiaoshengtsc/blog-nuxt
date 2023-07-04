@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2023-07-03 21:51:59
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2023-07-03 22:17:09
+ * @LastEditTime: 2023-07-04 08:49:00
  * @FilePath: \blog-nuxt\components\header.vue
  * @Description: 公共组件头
 -->
@@ -16,6 +16,7 @@
 </template>
 <script lang="ts" setup>
 import { Operation } from '@element-plus/icons-vue'
+import { useSidebar } from '../composables/useSidebar';
 const {sidebarOut, changeSidebarOut} = useSidebar()
 
 </script>

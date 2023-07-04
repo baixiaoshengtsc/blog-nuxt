@@ -1,5 +1,5 @@
 <template>
   <div>
-    主页
+    时间线
   </div>
 </template>

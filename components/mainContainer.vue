@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div class="main">
-      内容区
+      <slot></slot>
     </div>
   </div>
 </template>
