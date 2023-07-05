@@ -18,3 +18,11 @@ const ret:ApiListModel = {
   api2: '2',
   '1': 'api'
 }
+
+
+
+const ret2:BasicObject = {
+  api: '1',
+  api2: '2',
+  1: 'api'
+}
