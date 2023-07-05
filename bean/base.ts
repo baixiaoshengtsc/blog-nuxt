@@ -8,3 +8,7 @@ export interface TreeNode extends BasicObject {
   key: string,
   children?: this[]
 }
+export interface BasicObjectData<T> {
+  list: T,
+  total: number
+}

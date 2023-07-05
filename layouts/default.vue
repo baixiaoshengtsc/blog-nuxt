@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2023-07-03 21:30:08
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2023-07-04 17:23:35
+ * @LastEditTime: 2023-07-05 17:49:45
  * @FilePath: \blog-nuxt\pages\index.vue
  * @Description: 公共组件体
 -->
@@ -39,6 +39,13 @@
 <script lang="ts" setup>
 import { useSidebar } from '../composables/useSidebar';
 const {sidebarOut, changeSidebarOut} = useSidebar()
+const {start, end} = useProgress()
+onMounted(()=>{
+  start()
+  setTimeout(()=>{
+    end()
+  }, 2000)
+})
 
 </script>
 
