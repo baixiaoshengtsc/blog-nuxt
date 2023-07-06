@@ -1,5 +1,10 @@
 <template>
   <div>
-    主页
+    <ArticleWrapper></ArticleWrapper>
+    <ArticleWrapper></ArticleWrapper>
+    <ArticleWrapper></ArticleWrapper>
+    <ArticleWrapper></ArticleWrapper>
+    <ArticleWrapper></ArticleWrapper>
+    <ArticleWrapper></ArticleWrapper>
   </div>
 </template>

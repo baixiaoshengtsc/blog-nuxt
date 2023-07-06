@@ -6,12 +6,16 @@
   </div>
 </template>
 <style lang="less" scoped>
+@media screen and (min-width: 640px) {
+  .main-container{
+    width: 900px;
+    margin: 0 auto;
+  }
+}
   .main-container {
     .main {
-      width: 1000px;
-      margin: 0 auto;
       position: relative;
-      height: 2000px;
+      padding: 24px 24px 0px;
     }
   }
 </style>
