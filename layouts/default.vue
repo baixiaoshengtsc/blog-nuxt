@@ -2,14 +2,13 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2023-07-03 21:30:08
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2023-07-06 10:50:22
+ * @LastEditTime: 2023-07-13 00:32:41
  * @FilePath: \blog-nuxt\pages\index.vue
  * @Description: 公共组件体
 -->
 <template>
-  <div :style="{ overflow: sidebarOut ? 'auto' : 'hidden' }">
+  <div :style="{ overflowX: sidebarOut ? 'auto' : 'hidden', minHeight: '100%' }">
     <div class="common-layout" id="common-layout" :class="{ sidebar_in: !sidebarOut, sidebar_out: sidebarOut }">
-      <el-container>
         <el-container>
           <el-header>
             <Header></Header>
@@ -21,7 +20,6 @@
           </el-main>
           <el-footer>Footer</el-footer>
         </el-container>
-      </el-container>
       <ClientOnly>
         <Teleport to="#common-layout">
           <div class="left-sidebar">
@@ -44,6 +42,10 @@ const {sidebarOut, changeSidebarOut} = useSidebar()
 
 <style lang="less" scoped>
 .common-layout {
+
+  .el-container {
+    min-height: 100vh;
+  }
   &.sidebar_in {
     transform: translateX(200px);
     transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);

@@ -1,6 +1,7 @@
 type IndexType = string | number | symbol
-type BasicType = string | number | boolean | undefined | null | symbol
-export type BasicObject<K extends IndexType = string, V = unknown> = Record<K, V>
+export type BasicType = string | number | boolean | undefined | null | symbol
+// export type BasicObject<K extends IndexType = string, V = unknown> = Record<K, V>
+export type BasicObject = Record<string, any>
 export interface PlainNode extends BasicObject {
   id: number
 }

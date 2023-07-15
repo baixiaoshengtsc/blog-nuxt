@@ -1,5 +1,7 @@
 import { BasicObject } from "./base"
 
-export interface BasicDto extends BasicObject {
-  id: number
+export interface LoginDTO extends BasicObject {
+  account: string,
+  password: string,
+  captcha: string,
 }

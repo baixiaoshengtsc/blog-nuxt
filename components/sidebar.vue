@@ -32,6 +32,10 @@
           <el-icon><timer/></el-icon>
           <span>时间线</span>
         </el-menu-item>
+        <el-menu-item :index="routeList.login">
+          <el-icon><timer/></el-icon>
+          <span>登录</span>
+        </el-menu-item>
       </el-menu>
   </div>
 </template>
@@ -51,13 +55,15 @@ enum SelectIndex {
   'index'='/',
   'categories'='/categories',
   'tags'='/tags',
-  'timeline'='/timeline'
+  'timeline'='/timeline',
+  'login'='/login'
 }
 interface RouteList {
   index: SelectIndex.index,
   categories: SelectIndex.categories,
   tags: SelectIndex.tags,
   timeline: SelectIndex.timeline,
+  login: SelectIndex.login
 }
 const defaultActive = ref<SelectIndex>(SelectIndex.index)
 const routeList = ref<RouteList>({
@@ -65,6 +71,7 @@ const routeList = ref<RouteList>({
   categories: SelectIndex.categories,
   tags: SelectIndex.tags,
   timeline: SelectIndex.timeline,
+  login: SelectIndex.login
 })
 const handleSelect = (value: SelectIndex| string) => {
   if(route?.fullPath === value) return
