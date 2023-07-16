@@ -1,6 +1,15 @@
+/*
+ * @Author: baixiaoshengtsc 485434766@qq.com
+ * @Date: 2023-07-08 18:22:57
+ * @LastEditors: baixiaoshengtsc 485434766@qq.com
+ * @LastEditTime: 2023-07-15 18:45:16
+ * @FilePath: \blog-nuxt\bean\model.ts
+ * @Description: 响应体
+ */
 import { BasicType, BasicObject, BasicObjectData } from "./base"
 import { BasicVO, ArticleVO } from "./vo"
 import { _AsyncData } from "nuxt/dist/app/composables/asyncData"
+import type { FetchError } from 'ofetch';
 export interface BasicModel<T = unknown> extends BasicObject {
   status?: 0 | -1 | 401,
   statusText?: string,
@@ -24,7 +33,7 @@ export interface BasicObjectModel<T extends BasicVO> extends BasicModel {
   data?: T | null
 }
 
-export type DataT<T extends BasicModel> = Promise<_AsyncData<T | BasicErrorModel | null, any | null>>
+export type DataT<T extends BasicModel> = Promise<_AsyncData<T | BasicErrorModel | null, FetchError | null>>
 
 const data2:BasicObjectModel<BasicVO> = {
   status: -1,

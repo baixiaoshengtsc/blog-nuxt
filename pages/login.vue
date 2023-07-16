@@ -1,3 +1,11 @@
+<!--
+ * @Author: baixiaoshengtsc 485434766@qq.com
+ * @Date: 2023-07-15 18:18:34
+ * @LastEditors: baixiaoshengtsc 485434766@qq.com
+ * @LastEditTime: 2023-07-15 18:38:33
+ * @FilePath: \blog-nuxt\pages\login.vue
+ * @Description: 登录页
+-->
 <template>
 
   <div class="login-main">
@@ -60,7 +68,7 @@ async function getCaptcha() {
 }
 async function handleClickLogin() {
   let {data, pending, refresh, error} = await login.login(loginForm.value)
-  console.log(data.value?.data?.list[0].summary)
+  // console.log(data.value?.data?.list[0].summary)
 }
 </script>
 <style lang="less" scoped>

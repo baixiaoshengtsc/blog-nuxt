@@ -1,3 +1,11 @@
+/*
+ * @Author: baixiaoshengtsc 485434766@qq.com
+ * @Date: 2023-07-15 18:18:34
+ * @LastEditors: baixiaoshengtsc 485434766@qq.com
+ * @LastEditTime: 2023-07-15 22:07:18
+ * @FilePath: \blog-nuxt\api\index.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { BasicModel } from '../bean/model'
 import { BasicObject, BasicObjectData } from "../bean/base"
 import { UseFetchOptions, useFetch } from 'nuxt/app'
@@ -6,12 +14,15 @@ import { UseFetchOptions, useFetch } from 'nuxt/app'
 const fetchConfig:UseFetchOptions<Record<string, any>> = {
   baseURL: "http://localhost:3001",
   headers: {
-    token: ""
+    "Content-Type": "application/json"
   },
   server: false,
+  credentials: 'include',
   /** 响应数据的钩子 */
-  onResponse({ response }) {
-    const data = response._data
+  onResponse(val) {
+    const data = val.response._data
+    console.log('响应数据的钩子-val', val)
+    console.log('响应数据的钩子-val', val.response.headers.values)
     console.log('响应数据的钩子', data)
   },
   /** 响应错误的钩子 */
@@ -38,7 +49,7 @@ export default class ApiService {
 
   protected async $get(url:string, params?:BasicObject, config?:UseFetchOptions<Record<string, any>>) {
     console.log('fetch', `/${this.feature}/${url}`)
-    return await useFetch(`/${this.feature}/${url}`, {
+    return await useFetch(`/api/${this.feature}/${url}`, {
       ...fetchConfig,
       method: 'get',
       params: params
@@ -46,7 +57,7 @@ export default class ApiService {
   }
   
   protected async $post(url:string, params?:BasicObject, config?:UseFetchOptions<Record<string, any>>) {
-    return await useFetch(``, {
+    return await useFetch(`/api/${this.feature}/${url}`, {
       ...fetchConfig,
       method: 'post',
       body: params
