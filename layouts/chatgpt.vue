@@ -1,6 +1,6 @@
 <template>
   <div class="chatgpt">
-    chatgpt layout
+    <slot></slot>
   </div>
 </template>
 
@@ -10,6 +10,11 @@
 
 <style lang="less" scoped>
 .chatgpt {
-  
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to right, #ccc, blue, red);
 }
 </style>

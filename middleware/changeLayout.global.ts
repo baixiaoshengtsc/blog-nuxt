@@ -8,7 +8,10 @@ export default  defineNuxtRouteMiddleware((to ,from)=>{
   }else if(to.path.indexOf('/backend') !== -1 ) {
     const {setLayout} = useLayouts()
     setLayout('backend')
-  }else {
+  } else if(to.path==='/chat/help') {
+    const {setLayout} = useLayouts()
+    setLayout('chatgpt')
+  } else {
     const {setLayout} = useLayouts()
     setLayout('default')
   }
