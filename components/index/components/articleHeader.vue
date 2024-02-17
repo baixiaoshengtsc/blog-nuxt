@@ -1,3 +1,11 @@
+<!--
+ * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @Date: 2024-01-21 16:56:52
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2024-01-27 19:25:46
+ * @FilePath: \blog-nuxt\components\index\components\articleHeader.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <header class="article_header">
     <ul>
@@ -6,42 +14,31 @@
           <Clock />
         </el-icon>
         <span class="vertical-middle">
-          2023年7月6日
+          {{ props.createTime }}
         </span>
       </li>
       <li class="category" title="文章分类">
         <el-icon class="vertical-middle">
           <Folder />
         </el-icon>
-        <NuxtLink to="">
+        <NuxtLink to="" v-for="item in props.tags" :key="item.tag_id">
           <span class="vertical-middle">
-            分类标签1
+            {{ item.tag_name }}
           </span>
         </NuxtLink>
-        <NuxtLink to="">
-          <span class="vertical-middle">
-            分类标签2
-          </span>
-        </NuxtLink>
-        <NuxtLink to="">
-          <span class="vertical-middle">
-            分类标签3
-          </span>
-        </NuxtLink>
-        
       </li>
       <li>
         <el-icon class="vertical-middle">
           <View />
         </el-icon>
         <span class="vertical-middle">
-          观看数
+          {{ props.readNum}}
         </span>
       </li>
     </ul>
     <a>
       <h2 class="article_title">
-        标题标题标题标题标题标题
+        {{ props.title }}
       </h2>
     </a>
   </header>
@@ -52,6 +49,13 @@ import {
   Folder,
   View
 } from '@element-plus/icons-vue'
+
+const props = defineProps({
+  createTime: String,
+  readNum: Number,
+  title: String,
+  tags: Array<{tag_name: String, tag_id: Number|String}>
+})
 </script>
 <style lang="less" scoped>
 .article_header {

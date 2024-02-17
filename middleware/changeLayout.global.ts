@@ -1,0 +1,15 @@
+import { useLayouts } from "../composables/useLayouts";
+
+export default  defineNuxtRouteMiddleware((to ,from)=>{
+  console.log('----', to)
+  if(to.path === '/login') {
+    const {setLayout} = useLayouts()
+    setLayout('login')
+  }else if(to.path.indexOf('/backend') !== -1 ) {
+    const {setLayout} = useLayouts()
+    setLayout('backend')
+  }else {
+    const {setLayout} = useLayouts()
+    setLayout('default')
+  }
+})

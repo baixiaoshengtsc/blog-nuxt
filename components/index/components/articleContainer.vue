@@ -1,11 +1,14 @@
 <template>
   <section class="article_container">
-    <el-image class="article_poster" src="../../../assets/img/test-bg.png" fit="cover" />
+    <el-image class="article_poster" :src="props.imgSrc" fit="cover" />
     <p class="article_summary">
-      总结总结总结总结
+      {{ props.summary }}
     </p>
   </section>
 </template>
+<script lang="ts" setup>
+const props = defineProps(['imgSrc', 'summary'])
+</script>
 <style lang="less" scoped>
   @media screen and (min-width: 640px) {
     .article_poster {

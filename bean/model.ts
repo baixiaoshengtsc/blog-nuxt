@@ -1,8 +1,8 @@
 /*
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2023-07-08 18:22:57
- * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2023-07-15 18:45:16
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2024-02-03 11:56:17
  * @FilePath: \blog-nuxt\bean\model.ts
  * @Description: 响应体
  */
@@ -30,7 +30,7 @@ export interface BasicPlainModel<T extends BasicType> extends BasicModel {
   data?: T | null
 }
 export interface BasicObjectModel<T extends BasicVO> extends BasicModel {
-  data?: T | null
+  data?: T
 }
 
 export type DataT<T extends BasicModel> = Promise<_AsyncData<T | BasicErrorModel | null, FetchError | null>>

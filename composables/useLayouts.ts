@@ -1,6 +1,6 @@
 import { useState } from "nuxt/app";
 
-type Layouts = 'default' | 'login'
+type Layouts = 'default' | 'login' | 'backend'
 
 export const useLayouts = () => {
   let layout = useState<Layouts>('layout', () => {
