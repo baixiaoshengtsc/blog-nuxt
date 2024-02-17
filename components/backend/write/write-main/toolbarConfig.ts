@@ -1,6 +1,6 @@
 import { GeneralFunction } from "bean/base"
 import { EditorToolbar } from "./editorConfig"
-const baseUrl = '../../../../assets/img/'
+const baseUrl = '/img/'
 interface configItem {
   title: string
   src: string
