@@ -1,8 +1,8 @@
 <!--
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2023-07-15 18:18:34
- * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2023-07-15 18:38:33
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2024-01-27 18:40:02
  * @FilePath: \blog-nuxt\pages\login.vue
  * @Description: 登录页
 -->
@@ -49,9 +49,13 @@ import {
 } from '@element-plus/icons-vue'
 import captcha from '../api/captcha';
 import login from '../api/login'
+import article from '../api/article'
 import { LoginDTO } from '../bean/dto'
 // import responseUtil from '../utils/responseUtil'
 let { data, pending, refresh, error} = await captcha.getCaptcha()
+
+let {data:articleList} = await article.queryArticleList( {current: 1, size: 10})
+console.log('文章列表', articleList.value)
 // let ret = ref('获取验证码')
 // ret.value = await captcha.getCaptcha()
 let loginForm = ref<LoginDTO>({
@@ -68,6 +72,7 @@ async function getCaptcha() {
 }
 async function handleClickLogin() {
   let {data, pending, refresh, error} = await login.login(loginForm.value)
+  console.log(data.value?.data)
   // console.log(data.value?.data?.list[0].summary)
 }
 </script>

@@ -1,8 +1,8 @@
 /*
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2023-07-15 18:18:34
- * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2023-07-15 22:07:18
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2024-02-16 01:54:36
  * @FilePath: \blog-nuxt\api\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -12,11 +12,12 @@ import { UseFetchOptions, useFetch } from 'nuxt/app'
 
 
 const fetchConfig:UseFetchOptions<Record<string, any>> = {
-  baseURL: "http://localhost:3001",
-  headers: {
-    "Content-Type": "application/json"
-  },
+  baseURL: "",
+  // headers: {
+  //   "Content-Type": "application/json"
+  // },
   server: false,
+  watch: false,
   credentials: 'include',
   /** 响应数据的钩子 */
   onResponse(val) {
@@ -51,6 +52,7 @@ export default class ApiService {
     console.log('fetch', `/${this.feature}/${url}`)
     return await useFetch(`/api/${this.feature}/${url}`, {
       ...fetchConfig,
+      ...config,
       method: 'get',
       params: params
     })
@@ -59,6 +61,7 @@ export default class ApiService {
   protected async $post(url:string, params?:BasicObject, config?:UseFetchOptions<Record<string, any>>) {
     return await useFetch(`/api/${this.feature}/${url}`, {
       ...fetchConfig,
+      ...config,
       method: 'post',
       body: params
     })

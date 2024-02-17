@@ -1,12 +1,12 @@
 import ApiService from "../api"
 import { LoginDTO } from "../bean/dto"
-import { BasicPlainModel, DataT} from '../bean/model'
-import { ArticleVO } from '../bean/vo'
+import { BasicObjectModel ,BasicPlainModel, DataT} from '../bean/model'
+import { ArticleVO, LoginVO } from '../bean/vo'
 class Login extends ApiService {
   constructor(feature: string) {
     super(feature)
   }
-  public async login(params: LoginDTO): DataT<BasicPlainModel<string>> {
+  public async login(params: LoginDTO): DataT<BasicObjectModel<LoginVO>> {
     return await this.$post('', params)
   }
 }

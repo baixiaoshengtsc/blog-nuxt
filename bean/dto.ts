@@ -5,3 +5,8 @@ export interface LoginDTO extends BasicObject {
   password: string,
   captcha: string,
 }
+
+export interface ArticleDTO extends BasicObject {
+  current: number,
+  size: number
+}
