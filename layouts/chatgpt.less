@@ -1,0 +1,59 @@
+.chatgpt {
+
+  --chat-global-transition: all 0.3s ease;
+  --chat-global-color: black;
+  --chat-global-lower-color: #8d8080;
+
+  --chat-layout-bg-color: #c5bebe;
+  --chat-bg-color: #fff;
+  --chat-bg-border: 1px solid #ccc;
+
+  --chat-left-bg-color: #dcf9e5;
+
+  --chat-left-btn-bg-color: #fff;
+  --chat-left-btn-bg-h-color: #ccc;
+  --chat-left-btn-color: black;
+  --chat-left-btn-h-border: 1px solid #ccc;
+  /* listitem */
+  --chat-left-listitem-bg-color: #fff;
+  --chat-left-listitem-box-shadow: 0px 2px 4px #ccc;
+  --chat-left-listitem-icon-bg: green;
+  --chat-left-listitem-bg-h-color: #fafafa;
+  --chat-left-listitem-border: 2px solid transparent;
+  --chat-left-listitem-h-border: 2px solid green;
+  /* right */
+  --chat-right-item-border: 1px solid #ccc;
+  --chat-right-item-bg-color: #F2F2F2;
+  --chat-right-item-color: black;
+  --chat-right-btn-bg-color: #1D93AB;
+  --chat-right-btn-color: #fff;
+  --chat-right-btn-bg-h-color: #146E80;
+  --chat-right-btn-h-border: 1px solid #146E80;
+
+  .el-button.gray-btn{
+    background-color: var(--chat-left-btn-bg-color);
+    border-radius: 8px;
+    color: var(--chat-left-btn-color);
+
+    &:focus,
+    &:hover {
+      background-color: var(--chat-left-btn-bg-h-color);
+      color: var(--chat-left-btn-color);
+      border: var(--chat-left-btn-h-border);
+    }
+  }
+
+  .el-button.green-btn{
+    box-sizing: border-box;
+    background-color: var(--chat-right-btn-bg-color);
+    border-radius: 8px;
+    color: var(--chat-right-btn-color);
+
+    &:focus,
+    &:hover {
+      background-color: var(--chat-right-btn-bg-h-color);
+      color: var(--chat-right-btn-color);
+      border: var(--chat-right-btn-h-border);
+    }
+  }
+}
