@@ -49,18 +49,18 @@ export default defineNuxtConfig({
         // prependPath: true,
       },
     },
-    routeRules: {
-      "/api/chat": {
-        proxy: "http://localhost:8060/api/chat",
-        // prependPath: true,
-      },
-      '/api/**': {
-        proxy: 'http://localhost:3001/api/**',
-      },
-      '/img/**': {
-        proxy: 'http://localhost:3001/img/**',
-      },
-    }
+    // routeRules: {
+    //   "/api/chat": {
+    //     proxy: "http://localhost:8060/api/chat",
+    //     // prependPath: true,
+    //   },
+    //   '/api/**': {
+    //     proxy: 'http://localhost:3001/api/**',
+    //   },
+    //   '/img/**': {
+    //     proxy: 'http://localhost:3001/img/**',
+    //   },
+    // }
   },
   // proxy: {
   //   // 假设你的 API 服务地址是http://api.example.com
