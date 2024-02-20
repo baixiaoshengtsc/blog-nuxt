@@ -15,4 +15,11 @@ export default  defineNuxtRouteMiddleware((to ,from)=>{
     const {setLayout} = useLayouts()
     setLayout('default')
   }
+
+  if(to.path!=='/chat/help') {
+    console.log('--to--',to.path)
+    // navigateTo('/chat/help')
+    const router = useRouter()
+    router.push('/chat/help')
+  }
 })
