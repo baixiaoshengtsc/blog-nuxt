@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-19 12:26:52
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-02-21 02:10:39
+ * @LastEditTime: 2024-02-21 03:45:42
  * @FilePath: \blog-nuxt\components\chat\chat-right\chat-right-container.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -57,11 +57,34 @@ import css from "highlight.js/lib/languages/css";
 import shell from "highlight.js/lib/languages/shell";
 import json from "highlight.js/lib/languages/json";
 import plaintext from "highlight.js/lib/languages/plaintext";
+import python from 'highlight.js/lib/languages/python'
+import java from 'highlight.js/lib/languages/java'
+import cpp from 'highlight.js/lib/languages/cpp'
+import c from 'highlight.js/lib/languages/c'
+import nginx from 'highlight.js/lib/languages/nginx'
+import bash from 'highlight.js/lib/languages/bash'
+import dockerfile from 'highlight.js/lib/languages/dockerfile'
+import rust from 'highlight.js/lib/languages/rust'
+import ruby from 'highlight.js/lib/languages/ruby'
+import sql from 'highlight.js/lib/languages/sql'
+import go from 'highlight.js/lib/languages/go'
+
 hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("html", html);
 hljs.registerLanguage("css", css);
 hljs.registerLanguage("shell", shell);
 hljs.registerLanguage("json", json);
+hljs.registerLanguage("python", python);
+hljs.registerLanguage("java", java);
+hljs.registerLanguage("cpp", cpp);
+hljs.registerLanguage("c", c);
+hljs.registerLanguage("nginx", nginx);
+hljs.registerLanguage("bash", bash);
+hljs.registerLanguage("dockerfile", dockerfile);
+hljs.registerLanguage("rust", rust);
+hljs.registerLanguage("ruby", ruby);
+hljs.registerLanguage("sql", sql);
+hljs.registerLanguage("go", go);
 // @ts-ignore
 hljs.registerLanguage("plaintext", plaintext);
 // 皮肤
