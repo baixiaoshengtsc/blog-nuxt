@@ -8,7 +8,9 @@ interface chatVO {
   content: string
   role: 'assistant' | 'user'
 }
-
+interface chatNumsVo {
+  nums : number
+}
 class Chat extends ApiService {
   constructor(feature: string) {
     super(feature)
@@ -24,11 +26,15 @@ class Chat extends ApiService {
     // if(error) {
     //   console.log('error', error)
     // }
-    return await this.$post('',params, {
+    const {data, refresh,pending, error,execute, status} = await this.$post('',params, {
       // baseURL: ''
     })
-    
+    console.log('---中途---', data.value)
+    return {data, pending, error, refresh, execute, status}
     // return responseUtil(await this.$get(''))
+  }
+  public async getChatNums(): DataT<BasicObjectModel<chatNumsVo>> {
+    return await this.$post('/getNums')
   }
 }
 

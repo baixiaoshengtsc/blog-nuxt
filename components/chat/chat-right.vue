@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <span class="info">
-        <span class="title">
+        <span class="title" @click="openModel">
           {{ store.activeChat.title }}
         </span>
         <span class="nums">
@@ -12,7 +12,8 @@
       <span class="btn">
         <el-button :icon="ChatLineRound" class="gray-btn backToLeft" v-if="props.width<=600" size="default" @click="handleBackToLeft"></el-button>
         <el-button :icon="EditPen" class="gray-btn" size="default" @click="openModel" title="修改标题"></el-button>
-        <el-button :icon="Setting" class="gray-btn" size="default" title="设置"></el-button>
+        <el-button :icon="Setting" class="gray-btn" size="default" @click="handleSetting" title="设置"></el-button>
+        <el-button :icon="FullScreen" class="gray-btn" size="default" v-if="props.width>600" @click="store2.changeFullScreen" title="全屏"></el-button>
       </span>
     </div>
     <div class="container">
@@ -22,8 +23,8 @@
       }"></chat-right-container>
     </div>
     <div class="footer">
-      <div class="ipt-box">
-        <textarea rows="3" class="scrollbar" v-model="inputVal"></textarea>
+      <div class="ipt-box" @keydown="handleKeyDown">
+        <textarea ref="textRef" rows="3" class="scrollbar" v-model="inputVal" placeholder="使用组合快捷键Ctrl+Enter提交"></textarea>
         <el-button class="green-btn" @click="handleSubmit">
           <el-icon><Position /></el-icon>
           发送
@@ -31,14 +32,20 @@
       </div>
     </div>
 
-    <el-dialog v-model="dialogVisible" title="修改标题" width="500" center>
-      <el-input v-model="dialogInput">
+    <div class="setting-box" :class="{active: settingActive}">
+      <chat-right-setting v-bind="{
+        cb: handleSetting
+      }"></chat-right-setting>
+    </div>
+
+    <el-dialog v-model="dialogVisible" title="修改标题" center>
+      <el-input class="green-btn" v-model="dialogInput">
 
       </el-input>
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleEditTitle">
+          <el-button class="gray-btn" @click="dialogVisible = false">取消</el-button>
+          <el-button class="green-btn" @click="handleEditTitle">
             确定
           </el-button>
         </div>
@@ -48,15 +55,21 @@
 </template>
 
 <script lang="ts" setup>
-import {ref, computed} from 'vue'
-import { useChatList } from '../../store/index'
-import {EditPen, Setting, ChatLineRound, Position} from '@element-plus/icons-vue'
+import {ref, computed, watch} from 'vue'
+import { useChatList, useChatSetting } from '../../store/index'
+import {EditPen, Setting, ChatLineRound, Position, FullScreen} from '@element-plus/icons-vue'
 import moment from 'moment'
 const store = useChatList()
+const store2 = useChatSetting()
 const props = defineProps(['width'])
 let dialogVisible = ref<boolean>(false)
 let dialogInput = ref<string>('')
 let inputVal = ref<string>('')
+let settingActive = ref<boolean>(false)
+const textRef = ref()
+watch(()=>store.activeData, ()=>{
+  inputVal.value = ''
+}, {deep: true})
 
 const emits = defineEmits(['changeLeft'])
 
@@ -72,7 +85,7 @@ const handleEditTitle = () => {
   dialogVisible.value = false
 }
 const handleSetting = () => {
-
+  settingActive.value = !settingActive.value
 }
 
 const handleSubmit = () => {
@@ -83,6 +96,13 @@ const handleSubmit = () => {
     time: moment().format('yyyy-MM-DD HH:mm:ss')
   })
   inputVal.value = ''
+  textRef.value.focus()
+}
+const handleKeyDown = (e:any) => {
+  if(e.ctrlKey && e.key === 'Enter') {
+    handleSubmit()
+    e.preventDefault()
+  }
 }
 </script>
 <style lang="less">
@@ -116,6 +136,7 @@ const handleSubmit = () => {
 .container {
   height: 100%;
   width: 100%;
+  position: relative;
   .header {
     height: 80px;
     box-sizing: border-box;
@@ -132,6 +153,13 @@ const handleSubmit = () => {
         color: var(--chat-global-color);
         font-size: 18px;
         font-weight: 700;
+
+        &:hover {
+          text-decoration: underline;
+          text-decoration-thickness: 3px;
+          text-decoration-color: var(--chat-right-btn-bg-color);
+          cursor: pointer;
+        }
       }
       .nums {
         color: var(--chat-global-lower-color);
@@ -189,6 +217,22 @@ const handleSubmit = () => {
           margin-right: 10px;          
         }
       }
+    }
+  }
+
+  .setting-box {
+    height: calc(100% - 80px);
+    position: absolute;
+    z-index: 499;
+    top: 80px;
+    width: 100%;
+    transform: translateY(100%);
+    transition: var(--chat-global-transition);
+
+    &.active {
+      top: 80px;
+      transform: translateY(0);
+      transition: var(--chat-global-transition);
     }
   }
 

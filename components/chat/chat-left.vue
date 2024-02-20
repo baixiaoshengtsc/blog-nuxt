@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-18 18:10:53
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-02-19 11:34:13
+ * @LastEditTime: 2024-02-20 23:14:02
  * @FilePath: \blog-nuxt\components\chat\chat-left.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -11,6 +11,7 @@
     <div class="head">
       <p>
         我们都将成为gpt的奴隶!
+        <p class="small">已累计奴役GPT<span class="underline">{{numsData?.data?.nums}}</span>次!</p>
       </p>
     </div>
     <div class="list">
@@ -37,17 +38,19 @@
 import { CirclePlus, CircleClose } from '@element-plus/icons-vue';
 import { ref, reactive, watch, onMounted } from 'vue'
 import { useChatList } from '../../store/index'
+import chat from '../../api/chat'
 
 const emits = defineEmits(['changeLeft'])
 const store = useChatList()
 
 let activeNum = ref(0)
 let isAnimate = ref(false)
-
+const {data:numsData}  = await chat.getChatNums()
 watch(store.chatList, () => {
   if (activeNum.value > store.chatList.length) {
     activeNum.value = store.chatList.length
   }
+  store.setActiveUid(store.chatList[activeNum.value].id)
 }, { deep: true })
 watch(activeNum, () => {
   store.setActiveUid(store.chatList[activeNum.value].id)
@@ -105,6 +108,17 @@ const handleClickChatItem = (index: number) => {
     font-weight: 700;
     justify-content: center;
     align-items: center;
+
+    .small {
+      margin-top: 15px;
+      font-size: 12px;
+      text-align: center;
+      color: var(--chat-global-lower-color);
+
+      .underline {
+        text-decoration: underline;
+      }
+    }
   }
 
   .list {

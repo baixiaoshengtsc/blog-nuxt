@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-19 12:26:52
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-02-19 23:31:20
+ * @LastEditTime: 2024-02-21 02:10:39
  * @FilePath: \blog-nuxt\components\chat\chat-right\chat-right-container.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -18,14 +18,18 @@
         </div>
         <div class="item">
           <span v-if="item.success === 'pending'&&item.type==='assistant'">...</span>
-          <span v-if="item.success === true&&item.type==='assistant'">{{item.content}}</span>
-          <span v-if="item.success === false&&item.type==='assistant'">请求失败请重试</span>
-          <span v-if="item.type==='user'">{{item.content}}</span>
+          <div class="md-preview" v-if="item.success === true&&item.type==='assistant'" v-html="formatMarked(item.content)"></div>
+          <span v-if="item.success === false&&item.type==='assistant'">{{ item.content }}</span>
+          <div class="md-preview" v-if="item.type==='user'" v-html="formatMarked(item.content)"></div>
         </div>
         <div class="message" v-if="item.time">
           <span>
             {{ item.time }}
           </span>
+        </div>
+        <div class="focus-box" v-if="item.type==='assistant'">
+          <span class="active" @click="store.copyDataListItem(store.activeUid, i)" v-if="item.success === true">复制</span>
+          <span class="active delete" @click="store.deleteDataListItem(store.activeUid, i)">删除</span>
         </div>
       </div>
     </div>
@@ -35,7 +39,7 @@
         <div class="avatar">
         </div>
         <div class="item">
-          <span>{{props.inputVal}}</span>
+          <div class="md-preview" v-html="formatMarked(props.inputVal)"></div>
         </div>
       </div>
     </div>
@@ -43,6 +47,27 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-ignore
+import marked from 'marked'
+// hljs 按需加载
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+import html from "highlight.js/lib/languages/xml";
+import css from "highlight.js/lib/languages/css";
+import shell from "highlight.js/lib/languages/shell";
+import json from "highlight.js/lib/languages/json";
+import plaintext from "highlight.js/lib/languages/plaintext";
+hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("html", html);
+hljs.registerLanguage("css", css);
+hljs.registerLanguage("shell", shell);
+hljs.registerLanguage("json", json);
+// @ts-ignore
+hljs.registerLanguage("plaintext", plaintext);
+// 皮肤
+// import "highlight.js/styles/atom-one-dark.css";
+import "./highlight.less";
+
 import {ref, watch} from 'vue'
 import { scrollBottom } from '../../../utils/dom';
 import { useChatList } from '../../../store/index'
@@ -67,14 +92,49 @@ const store = useChatList()
 const handleResetScroll = () =>{
   scrollBottom(chatRef.value)
 }
-watch([chatRef, ()=>props.inputVal],()=>{
+watch([chatRef, props],()=>{
   store.scrollRef = chatRef.value
   // console.log('--监听--')
   setTimeout(()=>{handleResetScroll()})
 })
+onMounted(()=>{
+  setMarkedOptions()
+})
+const setMarkedOptions = () => {
+  const renderer = new marked.Renderer();
+  renderer.link = function customLink(href: any, title: any, text: any) {
+    return `<a class="link" href="${href}" target="_blank" title="${text}">${text}</a>`;
+  };
+  renderer.image = function customImage(href:any, title:any, text:any) {
+    return (
+      `<a class="img-wrapper" href="${href}" target="_blank" title="${text}">` + `<img src="${href}" alt="${text}">` + "</a>"
+    );
+  };
+  marked.setOptions({
+    renderer,
+    // @ts-ignore
+    highlight: function (code, lang) {
+      const language = hljs.getLanguage(lang) ? lang : "plaintext";
+      return hljs.highlight(code, { language }).value;
+    },
+    pedantic: false,
+    gfm: true,
+    breaks: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+    xhtml: false,
+  });
+};
+setMarkedOptions()
+const formatMarked = (val:any)=>{
+  return marked(val)
+}
 </script>
 
 <style lang="less" scoped>
+@import url(./marked.less);
+@import url(./highlight.less);
 .chat-container {
   height: 100%;
   padding: 20px 20px 40px;
@@ -106,6 +166,7 @@ watch([chatRef, ()=>props.inputVal],()=>{
       flex-direction: column;
       align-items: flex-start;
       max-width: var(--message-max-width);
+      position: relative;
   
       .avatar {
         margin-top: 20px;
@@ -115,6 +176,7 @@ watch([chatRef, ()=>props.inputVal],()=>{
         border: var(--chat-bg-border);
       }
       .item {
+        max-width: 100%;
         margin-top: 10px;
         padding: 10px;
         border-radius: 8px;
@@ -130,6 +192,35 @@ watch([chatRef, ()=>props.inputVal],()=>{
         display: flex;
         color: var(--chat-global-lower-color);
         font-size: 12px;
+      }
+
+      &:hover {
+        .focus-box {
+          opacity: 1;
+          transition: var(--chat-global-transition);
+          animation: slide-in .3s ease;
+        }
+      }
+
+      .focus-box {
+        position: absolute;
+        right: 0px;
+        top: 30px;
+        color: var(--chat-global-lower-color);
+        font-size: 14px;
+        opacity: 0;
+        transition: var(--chat-global-transition);
+
+        .active {
+          &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+          }
+        }
+
+        .active+.active {
+          margin-left: 10px;
+        }
       }
     }
   }
@@ -148,6 +239,18 @@ watch([chatRef, ()=>props.inputVal],()=>{
   &::-webkit-scrollbar-track {
     border-radius: 0;
     background: rgba(0, 0, 0, 0.1);
+  }
+
+  @keyframes slide-in {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateX(0px);
+    }
   }
 }
 </style>

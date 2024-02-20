@@ -8,7 +8,7 @@
 -->
 <template>
   <ClientOnly>
-    <div class="chat-container">
+    <div class="chat-container" :class="{ fullScreen: store.isFullScreen}">
       <div class="chat-left" :class="{ active: isLeftDisplay }">
         <chat-left @changeLeft="handleChange"></chat-left>
       </div>
@@ -22,9 +22,11 @@
 <script lang="ts" setup>
 import { ref, onMounted , onUpdated, watch} from 'vue'
 import { scrollBottom } from '../../utils/dom';
+import { useChatSetting } from '../../store';
 const isLeftDisplay = ref(false)
 const width = ref(0)
 const chatRef = ref()
+const store = useChatSetting()
 const init = () => {
   width.value = window.innerWidth
   window.addEventListener('resize', (event) => {
@@ -70,6 +72,12 @@ const handleChange = () => {
   align-items: center;
   background-color: var(--chat-bg-color);
 
+  &.fullScreen {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+  }
+
   &:hover {
     box-shadow: 0px 2px 4px #ccc;
   }
@@ -82,7 +90,8 @@ const handleChange = () => {
   }
 
   .chat-right {
-    flex: 1;
+    //flex: 1;
+    width: calc(100% - 300px);
     height: 100%;
   }
 }

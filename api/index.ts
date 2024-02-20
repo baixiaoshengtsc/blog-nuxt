@@ -1,15 +1,18 @@
 /*
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2023-07-15 18:18:34
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2024-02-16 01:54:36
+ * @LastEditors: baixiaoshengtsc 485434766@qq.com
+ * @LastEditTime: 2024-02-20 15:22:46
  * @FilePath: \blog-nuxt\api\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { BasicModel } from '../bean/model'
 import { BasicObject, BasicObjectData } from "../bean/base"
 import { UseFetchOptions, useFetch } from 'nuxt/app'
-
+import { v4 as uuidv4 } from 'uuid';
+const uuid = () => {
+  return uuidv4()
+}
 
 const fetchConfig:UseFetchOptions<Record<string, any>> = {
   baseURL: "",
@@ -19,6 +22,7 @@ const fetchConfig:UseFetchOptions<Record<string, any>> = {
   server: false,
   watch: false,
   credentials: 'include',
+  key:uuid(),
   /** 响应数据的钩子 */
   onResponse(val) {
     const data = val.response._data
@@ -48,7 +52,7 @@ export default class ApiService {
     this.feature = feature
   }
 
-  protected async $get(url:string, params?:BasicObject, config?:UseFetchOptions<Record<string, any>>) {
+  public async $get(url:string, params?:BasicObject, config?:UseFetchOptions<Record<string, any>>) {
     console.log('fetch', `/${this.feature}/${url}`)
     return await useFetch(`/api/${this.feature}/${url}`, {
       ...fetchConfig,
@@ -58,7 +62,7 @@ export default class ApiService {
     })
   }
   
-  protected async $post(url:string, params?:BasicObject, config?:UseFetchOptions<Record<string, any>>) {
+  public async $post(url:string, params?:BasicObject, config?:UseFetchOptions<Record<string, any>>) {
     return await useFetch(`/api/${this.feature}/${url}`, {
       ...fetchConfig,
       ...config,
