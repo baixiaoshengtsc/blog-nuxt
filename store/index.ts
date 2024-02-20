@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import chat from '../api/chat'
 import { ElMessage } from 'element-plus'
 import { scrollBottom } from '../utils/dom';
+import text from './test.txt'
 
 interface dataListItem {
   type: 'user' | 'assistant'
@@ -238,7 +239,7 @@ openai响应错误，可能存在的问题如下：
 >  齐声歌唱，赞美万机之神！
 >
 ***如果排除以上问题且安抚机魂后仍报错，请联系作者(485434766)。***
-`
+        `
         this.dataList[dataIndex].data[assistantIndex].time = this.dataList[dataIndex].data[userIndex].time
         this.chatList[chatIndex].latestDate = this.dataList[dataIndex].data[userIndex].time
       } else {

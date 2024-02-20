@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-19 12:26:52
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-02-21 03:45:42
+ * @LastEditTime: 2024-02-21 04:50:41
  * @FilePath: \blog-nuxt\components\chat\chat-right\chat-right-container.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,7 +19,7 @@
         <div class="item">
           <span v-if="item.success === 'pending'&&item.type==='assistant'">...</span>
           <div class="md-preview" v-if="item.success === true&&item.type==='assistant'" v-html="formatMarked(item.content)"></div>
-          <span v-if="item.success === false&&item.type==='assistant'">{{ item.content }}</span>
+          <div class="md-preview" v-if="item.success === false&&item.type==='assistant'" v-html="formatMarked(item.content)"></div>
           <div class="md-preview" v-if="item.type==='user'" v-html="formatMarked(item.content)"></div>
         </div>
         <div class="message" v-if="item.time">
