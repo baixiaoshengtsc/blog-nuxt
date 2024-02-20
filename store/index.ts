@@ -47,6 +47,7 @@ function copyToClipboard(text: string) {
     document.body.appendChild(textArea);
     textArea.focus(); 
     textArea.select();
+    document.body.removeChild(textArea)
     try {
       const successful = document.execCommand('copy');
       ElMessage.success({
