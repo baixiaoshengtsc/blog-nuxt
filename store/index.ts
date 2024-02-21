@@ -25,6 +25,13 @@ const getIndexUtil = (fn: (...args: any[]) => boolean, arr: any[]) => {
   return ret
 }
 function copyToClipboard(text: string) {
+  // Fallback: 使用老方法 
+  // const textArea = document.createElement('textarea');
+  // textArea.value = text;
+  // document.body.appendChild(textArea);
+  // textArea.focus(); 
+  // textArea.select();
+
   if (navigator.clipboard) {
     // 使用 navigator.clipboard API
     navigator.clipboard.writeText(text).then(() => {
@@ -41,15 +48,16 @@ function copyToClipboard(text: string) {
     });
   }
   else {
-    // Fallback: 使用老方法 
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.focus(); 
-    textArea.select();
-    document.body.removeChild(textArea)
     try {
-      const successful = document.execCommand('copy');
+      let textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
       ElMessage.success({
         offset: 20,
         message: '复制成功!'
@@ -60,6 +68,7 @@ function copyToClipboard(text: string) {
         message: '复制失败惹...'
       })
     }
+
   }
 }
 export const useChatList = defineStore('chatList', {
@@ -126,7 +135,7 @@ export const useChatList = defineStore('chatList', {
       let chatIndex = getIndexUtil((item) => {
         return item.id === uid
       }, this.chatList)
-      this.dataList[index].data.splice(i-1, 2)
+      this.dataList[index].data.splice(i - 1, 2)
       this.chatList[chatIndex].nums -= 2
     },
     copyDataListItem(uid: string, i: number) {
@@ -285,7 +294,7 @@ openai响应错误，可能存在的问题如下：
   }
 })
 export const useChatSetting = defineStore('chatSetting', {
-  state: ()=>{
+  state: () => {
     return {
       isFullScreen: false
     }
