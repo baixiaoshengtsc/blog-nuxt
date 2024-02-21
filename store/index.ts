@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import chat from '../api/chat'
 import { ElMessage } from 'element-plus'
 import { scrollBottom } from '../utils/dom';
-import text from './test.txt'
 
 interface dataListItem {
   type: 'user' | 'assistant'
@@ -106,7 +105,7 @@ export const useChatList = defineStore('chatList', {
         pw: 'fefdc625-13a8-4a81-b82a-b0bf768eb5a1'
       }
       this.chatList.unshift(defaultList)
-      this.dataList.push({
+      this.dataList.unshift({
         id: uid,
         data: []
       })

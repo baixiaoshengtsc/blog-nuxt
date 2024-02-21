@@ -32,9 +32,10 @@
       </div>
     </div>
 
-    <div class="setting-box" :class="{active: settingActive}" v-if="settingActive">
+    <div class="setting-box" :class="{active: settingActive}">
       <chat-right-setting v-bind="{
-        cb: handleSetting
+        cb: handleSetting,
+        active: settingActive
       }"></chat-right-setting>
     </div>
 

@@ -27,7 +27,7 @@
             {{ item.time }}
           </span>
         </div>
-        <div class="focus-box" v-if="item.type==='assistant'">
+        <div class="focus-box" v-if="item.type==='assistant'&&item.success!=='pending'">
           <span class="active" @click="store.copyDataListItem(store.activeUid, i)" v-if="item.success === true">复制</span>
           <span class="active delete" @click="store.deleteDataListItem(store.activeUid, i)">删除</span>
         </div>

@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-18 18:10:53
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-02-20 23:14:02
+ * @LastEditTime: 2024-02-21 12:05:24
  * @FilePath: \blog-nuxt\components\chat\chat-left.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -22,7 +22,7 @@
           <span class="num">{{ item.nums }}条对话</span>
           <span class="time">{{ item.latestDate }}</span>
         </div>
-        <el-icon @click="store.deleteChatListItem(item.id)">
+        <el-icon @click="handleDeleteChatItem(item.id)">
           <CircleClose />
         </el-icon>
       </div>
@@ -46,15 +46,20 @@ const store = useChatList()
 let activeNum = ref(0)
 let isAnimate = ref(false)
 const {data:numsData}  = await chat.getChatNums()
+watch(activeNum, () => {
+  // console.log('---',store.chatList[activeNum.value].id, store.chatList[activeNum.value])
+  setTimeout(()=>{
+    store.setActiveUid(store.chatList[activeNum.value].id)
+  })
+}, { deep: true, immediate: true })
 watch(store.chatList, () => {
   if (activeNum.value > store.chatList.length) {
+    // console.log('---', activeNum.value)
+    // console.log('---', store.chatList.length)
     activeNum.value = store.chatList.length
   }
   store.setActiveUid(store.chatList[activeNum.value].id)
 }, { deep: true })
-watch(activeNum, () => {
-  store.setActiveUid(store.chatList[activeNum.value].id)
-}, { deep: true, immediate: true })
 const handleAddChatItem = () => {
   store.addChatListItem()
   activeNum.value = 0
@@ -66,6 +71,10 @@ const handleAddChatItem = () => {
 const handleClickChatItem = (index: number) => {
   activeNum.value = index
   emits('changeLeft')
+}
+const handleDeleteChatItem = (uid: string) => {
+  store.deleteChatListItem(uid)
+  store.setActiveUid(store.chatList[activeNum.value].id)
 }
 </script>
 <style lang="less">

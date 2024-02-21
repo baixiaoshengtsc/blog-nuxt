@@ -7,12 +7,7 @@
         </span>
         <span class="action">
           <el-select v-model="formData.model">
-            <el-option
-              v-for="item in modelList"
-              :key="item.value"
-              :label="item.name"
-              :value="item.value"
-            />
+            <el-option v-for="item in modelList" :key="item.value" :label="item.name" :value="item.value" />
           </el-select>
         </span>
       </div>
@@ -22,7 +17,7 @@
           <p class="info">数值最大为2,大于1以后可能会胡言乱语！</p>
         </span>
         <span class="action">
-          <span class="valueInfo">{{formData.temperature}}</span>
+          <span class="valueInfo">{{ formData.temperature }}</span>
           <el-slider v-model="formData.temperature" :min="0" :max="2" :step="0.1" />
         </span>
       </div>
@@ -33,7 +28,7 @@
           <p class="info">数值最大为24,人设数据也算一条。</p>
         </span>
         <span class="action">
-          <span class="valueInfo">{{formData.maxLength}}</span>
+          <span class="valueInfo">{{ formData.maxLength }}</span>
           <el-slider v-model="formData.maxLength" :min="0" :max="24" :step="2" />
         </span>
       </div>
@@ -47,10 +42,10 @@
           <el-button @click="openModel">编辑</el-button>
         </span>
       </div>
-      
+
       <el-dialog v-model="dialogVisible" title="修改人设" center>
-        <el-input class="green-btn" v-model="dialogInput" :rows="4" show-word-limit  maxlength="250" type="textarea">
-  
+        <el-input class="green-btn" v-model="dialogInput" :rows="4" show-word-limit maxlength="250" type="textarea">
+
         </el-input>
         <template #footer>
           <div class="dialog-footer">
@@ -75,15 +70,17 @@
       </div>
     </div>
 
-    <el-button class="gray-btn" :style="{marginTop:'15px',width: '100%'}" @click="handleSubmitConfig">确认</el-button>
+    <el-button class="gray-btn" :style="{ marginTop: '15px', width: '100%' }" @click="handleSubmitConfig">确认</el-button>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {ref ,reactive, watch} from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { useChatList } from '../../../store';
+import { ElMessage } from 'element-plus'
+
 const store = useChatList()
-const props = defineProps(['cb'])
+const props = defineProps(['cb', 'active'])
 const formData = reactive({
   model: store.activeChat.type,
   temperature: store.activeChat.temperature,
@@ -92,14 +89,17 @@ const formData = reactive({
   pw: store.activeChat.pw
 })
 const initData = () => {
-  formData.model= store.activeChat.type,
-  formData.temperature= store.activeChat.temperature,
-  formData.maxLength= store.activeChat.maxLength,
-  formData.system= store.activeChat.system,
-  formData.pw= store.activeChat.pw
+  formData.model = store.activeChat.type,
+    formData.temperature = store.activeChat.temperature,
+    formData.maxLength = store.activeChat.maxLength,
+    formData.system = store.activeChat.system,
+    formData.pw = store.activeChat.pw
 }
-watch(()=>store.activeUid, ()=>{
+watch(() => store.activeUid, () => {
   dialogVisible.value = false
+  initData()
+})
+watch(() => props.active, () => {
   initData()
 })
 const modelList = reactive([
@@ -135,7 +135,11 @@ const handleSubmitConfig = () => {
   // @ts-ignore
   store.setChatType(store.activeUid, formData.model)
   store.setChatPw(store.activeUid, formData.pw)
-  props.cb&&props.cb()
+  props.cb && props.cb()
+  ElMessage.success({
+    offset: 20,
+    message: '修改会话配置成功!'
+  })
 }
 </script>
 
@@ -160,12 +164,14 @@ const handleSubmitConfig = () => {
 
       .label {
         font-weight: 700;
+
         .info {
           font-weight: normal;
           font-size: 12px;
           color: var(--chat-global-lower-color);
         }
       }
+
       .action {
         display: flex;
         justify-content: end;
@@ -175,10 +181,12 @@ const handleSubmitConfig = () => {
         .valueInfo {
           margin-right: 15px;
         }
+
         .el-slider {
           width: 80%;
         }
       }
+
       &+.setting-card {
         border-top: var(--chat-bg-border);
       }
