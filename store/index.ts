@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-19 00:48:01
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-02-29 22:39:25
+ * @LastEditTime: 2024-02-29 23:01:02
  * @FilePath: \blog-nuxt\store\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -280,14 +280,15 @@ export const useChatList = defineStore('chatList', {
         let data = text.replace(/[^\x20-\x7E\u4E00-\u9FFF]+/g, "").split('data:')
         data.forEach(item => {
           if (item.indexOf('DONE') !== -1) {
-            return;
-          }
-          if (item) {
-            const format = JSON.parse(item)
-            _this.dataList[dataIndex].data[userIndex].success = true
-            _this.dataList[dataIndex].data[assistantIndex].success = true
-            if (format.choices[0].delta?.content) {
-              _this.dataList[dataIndex].data[assistantIndex].content += format.choices[0].delta?.content
+            return
+          }else {
+            if (item) {
+              const format = JSON.parse(item)
+              _this.dataList[dataIndex].data[userIndex].success = true
+              _this.dataList[dataIndex].data[assistantIndex].success = true
+              if (format.choices[0].delta?.content) {
+                _this.dataList[dataIndex].data[assistantIndex].content += format.choices[0].delta?.content
+              }
             }
           }
         })
