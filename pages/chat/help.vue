@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-18 17:45:28
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-02-19 20:56:19
+ * @LastEditTime: 2024-02-29 10:09:12
  * @FilePath: \blog-nuxt\pages\chat\help.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -60,6 +60,7 @@ const handleChange = () => {
 
 <style lang="less" scoped>
 .chat-container {
+  z-index: 2;
   max-width: 1200px;
   height: 650px;
   height: var(--window-height);
