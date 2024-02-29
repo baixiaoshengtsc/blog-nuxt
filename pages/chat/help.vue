@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-18 17:45:28
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-02-29 10:09:12
+ * @LastEditTime: 2024-03-01 00:25:09
  * @FilePath: \blog-nuxt\pages\chat\help.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -15,6 +15,16 @@
       <div class="chat-right">
         <chat-right @changeLeft="handleChange" v-bind="{width}"></chat-right>
       </div>
+
+      <el-dialog v-model="dialogVisible" center :before-close="handleDialogClose">
+        <el-timeline>
+          <el-timeline-item center :timestamp="item.time" placement="top" v-for="(item, i) in store.updateList">
+            <el-card>
+              <p>{{item.msg}}</p>
+            </el-card>
+          </el-timeline-item>
+        </el-timeline>
+      </el-dialog>
     </div>
   </ClientOnly>
 </template>
@@ -26,6 +36,7 @@ import { useChatSetting } from '../../store';
 const isLeftDisplay = ref(false)
 const width = ref(0)
 const chatRef = ref()
+const dialogVisible = ref(false)
 const store = useChatSetting()
 const init = () => {
   width.value = window.innerWidth
@@ -39,6 +50,8 @@ const init = () => {
 }
 onMounted(() => {
   init()
+  store.initUpdateList()
+  if(store.needShowUpdate) dialogVisible.value = true
   // const div = document.getElementById('chat-container')
   // console.log(div)
   // // setInterval(()=>{
@@ -55,6 +68,10 @@ onUpdated(()=>{
 const handleChange = () => {
   if(width.value<=600)
   isLeftDisplay.value = !isLeftDisplay.value
+}
+const handleDialogClose = () => {
+  store.watchUpdateList()
+  dialogVisible.value = false
 }
 </script>
 

@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-19 00:48:01
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-02-29 23:01:02
+ * @LastEditTime: 2024-03-01 00:11:06
  * @FilePath: \blog-nuxt\store\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -12,6 +12,8 @@ import { v4 as uuidv4 } from 'uuid';
 import chat from '../api/chat'
 import { ElMessage } from 'element-plus'
 import { scrollBottom } from '../utils/dom';
+import { updateList } from './updateList';
+import { time } from 'console';
 
 interface dataListItem {
   type: 'user' | 'assistant'
@@ -281,7 +283,7 @@ export const useChatList = defineStore('chatList', {
         data.forEach(item => {
           if (item.indexOf('DONE') !== -1) {
             return
-          }else {
+          } else {
             if (item) {
               const format = JSON.parse(item)
               _this.dataList[dataIndex].data[userIndex].success = true
@@ -372,12 +374,64 @@ export const useChatList = defineStore('chatList', {
 export const useChatSetting = defineStore('chatSetting', {
   state: () => {
     return {
-      isFullScreen: false
+      isFullScreen: false,
+      updateList: [] as any[]
     }
+  },
+  getters: {
+    needShowUpdate(state) {
+      let ret = false
+      state.updateList.forEach(item => {
+        if (item.isWatch === false) {
+          ret = true
+        }
+      })
+      return ret
+    },
   },
   actions: {
     changeFullScreen() {
       this.isFullScreen = !this.isFullScreen
+    },
+    initUpdateList() {
+      if (this.updateList.length > 0) {
+        let baseList = updateList.map(item => {
+          return {
+            time: item.time,
+            msg: item.msg,
+            isWatch: false
+          }
+        })
+        this.updateList.forEach((item, i) => {
+          updateList.forEach((item2, i) => {
+            if (item.time === item2.time && item.isWatch) {
+              baseList[i].isWatch = true
+            }
+          })
+        })
+        this.updateList = baseList
+      } else {
+        this.updateList = updateList.map(item => {
+          return {
+            time: item.time,
+            msg: item.msg,
+            isWatch: false
+          }
+        })
+      }
+    },
+    watchUpdateList() {
+      this.updateList = this.updateList.map(item => {
+        return {
+          time: item.time,
+          msg: item.msg,
+          isWatch: true
+        }
+      })
     }
+  },
+  persist: process.client && {
+    storage: localStorage,
+    paths: ['updateList']
   }
 })
