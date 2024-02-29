@@ -34,7 +34,7 @@ class Chat extends ApiService {
     // return responseUtil(await this.$get(''))
   }
   public async getChatNums(): DataT<BasicObjectModel<chatNumsVo>> {
-    return await this.$post('/getNums')
+    return await this.$post('getNums')
   }
 }
 
