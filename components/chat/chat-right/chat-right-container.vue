@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-19 12:26:52
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-02-21 04:50:41
+ * @LastEditTime: 2024-03-01 16:06:26
  * @FilePath: \blog-nuxt\components\chat\chat-right\chat-right-container.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -115,9 +115,12 @@ const store = useChatList()
 const handleResetScroll = () =>{
   scrollBottom(chatRef.value)
 }
-watch([chatRef, props],()=>{
+watch([chatRef, ()=>props.inputVal],()=>{
   store.scrollRef = chatRef.value
   // console.log('--监听--')
+  setTimeout(()=>{handleResetScroll()})
+})
+watch(()=>store.activeData, ()=>{
   setTimeout(()=>{handleResetScroll()})
 })
 onMounted(()=>{

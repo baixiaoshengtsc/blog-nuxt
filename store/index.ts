@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-19 00:48:01
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-03-01 15:47:43
+ * @LastEditTime: 2024-03-01 16:12:54
  * @FilePath: \blog-nuxt\store\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -211,23 +211,6 @@ export const useChatList = defineStore('chatList', {
       const userIndex = this.dataList[dataIndex].data.length - 2
       const assistantIndex = this.dataList[dataIndex].data.length - 1
       this.chatList[chatIndex].nums += 2
-      // const { data, pending, error } = await chat.chat({
-      //   option: this.activeChat,
-      //   history: this.activeData.data.filter(item => { return item.success !== 'pending' && item.success !== false }),
-      //   content: obj.content
-      // })
-      // const { data, pending, error } = await useFetch(`/api/chat`, {
-      //   method: 'post',
-      //   server: false,
-      //   watch: false,
-      //   credentials: 'include',
-      //   key: uuid(),
-      //   body: {
-      //     option: this.activeChat,
-      //     history: this.activeData.data.filter(item => { return item.success !== 'pending' && item.success !== false }),
-      //     content: obj.content
-      //   }
-      // })
       const res = await fetch('/api/chat', {
         method: 'post',
         headers: {
@@ -296,56 +279,6 @@ openai响应错误，可能存在的问题如下：
         })
         return pipe.read().then(util)
       })
-      // const apiService = new ApiService('chat')
-      // const { data, pending, error } = await apiService.$post('', {
-      //   option: this.activeChat,
-      //   history: this.activeData.data.filter(item => { return item.success !== 'pending' && item.success !== false }),
-      //   content: obj.content
-      // })
-
-      //       if (false) {
-      //         this.dataList[dataIndex].data[userIndex].success = false
-      //         this.dataList[dataIndex].data[assistantIndex].success = false
-      //         this.dataList[dataIndex].data[assistantIndex].content = `
-      // openai响应错误，可能存在的问题如下：
-      // -  如使用gpt4模型，请切换模型或者等待一分钟请求冷却后再试。
-      // -  如非请求冷却问题请检查历史记录长度是否超标，请缩短设置历史记录长度后再次重试。
-      // -  由于openai最近新发布视频模型，导致洋人的服务器被拉爆了，也有可能是单纯的openai服务器宕机。
-      // > 
-      // >  鸣大钟一次！
-      // > 
-      // >  推动杠杆，启动活塞和泵……
-      // > 
-      // >  鸣大钟两次！
-      // > 
-      // >  按下按钮，发动引擎，点燃涡轮，注入生命……
-      // > 
-      // >  鸣大钟三次！
-      // > 
-      // >  齐声歌唱，赞美万机之神！
-      // >
-      // ***如果排除以上问题且安抚机魂后仍报错，请联系作者(485434766)。***
-      //         `
-      //         this.dataList[dataIndex].data[assistantIndex].time = this.dataList[dataIndex].data[userIndex].time
-      //         this.chatList[chatIndex].latestDate = this.dataList[dataIndex].data[userIndex].time
-      //       } else {
-      //         // @ts-ignore
-      //         if (data.value?.status === 0) {
-      //           this.dataList[dataIndex].data[userIndex].success = true
-      //           this.dataList[dataIndex].data[assistantIndex].success = true
-      //           // @ts-ignore
-      //           this.dataList[dataIndex].data[assistantIndex].content = data.value.data?.content + ''
-      //           this.dataList[dataIndex].data[assistantIndex].time = dateNow()
-      //           this.chatList[chatIndex].latestDate = this.dataList[dataIndex].data[userIndex].time
-      //         } else {
-      //           this.dataList[dataIndex].data[userIndex].success = false
-      //           this.dataList[dataIndex].data[assistantIndex].success = false
-      //           // @ts-ignore
-      //           this.dataList[dataIndex].data[assistantIndex].content = data.value?.statusText ? data.value?.statusText + '' : '请求错误，请检查网络连接！'
-      //           this.dataList[dataIndex].data[assistantIndex].time = this.dataList[dataIndex].data[userIndex].time
-      //           this.chatList[chatIndex].latestDate = this.dataList[dataIndex].data[userIndex].time
-      //         }
-      //       }
       setTimeout(() => {
         scrollBottom(this.scrollRef)
       })
