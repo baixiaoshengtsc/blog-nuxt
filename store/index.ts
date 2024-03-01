@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-19 00:48:01
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-03-01 00:11:06
+ * @LastEditTime: 2024-03-01 15:47:43
  * @FilePath: \blog-nuxt\store\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -256,25 +256,25 @@ export const useChatList = defineStore('chatList', {
           _this.dataList[dataIndex].data[userIndex].success = false
           _this.dataList[dataIndex].data[assistantIndex].success = false
           _this.dataList[dataIndex].data[assistantIndex].content = `
-      openai响应错误，可能存在的问题如下：
-      -  如使用gpt4模型，请切换模型或者等待一分钟请求冷却后再试。
-      -  如非请求冷却问题请检查历史记录长度是否超标，请缩短设置历史记录长度后再次重试。
-      -  由于openai最近新发布视频模型，导致洋人的服务器被拉爆了，也有可能是单纯的openai服务器宕机。
-      > 
-      >  鸣大钟一次！
-      > 
-      >  推动杠杆，启动活塞和泵……
-      > 
-      >  鸣大钟两次！
-      > 
-      >  按下按钮，发动引擎，点燃涡轮，注入生命……
-      > 
-      >  鸣大钟三次！
-      > 
-      >  齐声歌唱，赞美万机之神！
-      >
-      ***如果排除以上问题且安抚机魂后仍报错，请联系作者(485434766)。***
-              `
+openai响应错误，可能存在的问题如下：
+-  如使用gpt4模型，请切换模型或者等待一分钟请求冷却后再试。
+-  如非请求冷却问题请检查历史记录长度是否超标，请缩短设置历史记录长度后再次重试。
+-  由于openai最近新发布视频模型，导致洋人的服务器被拉爆了，也有可能是单纯的openai服务器宕机。
+> 
+>  鸣大钟一次！
+> 
+>  推动杠杆，启动活塞和泵……
+> 
+>  鸣大钟两次！
+> 
+>  按下按钮，发动引擎，点燃涡轮，注入生命……
+> 
+>  鸣大钟三次！
+> 
+>  齐声歌唱，赞美万机之神！
+>
+***如果排除以上问题且安抚机魂后仍报错，请联系作者(485434766)。***
+`
           _this.dataList[dataIndex].data[assistantIndex].time = _this.dataList[dataIndex].data[userIndex].time
           _this.chatList[chatIndex].latestDate = _this.dataList[dataIndex].data[userIndex].time
           return
