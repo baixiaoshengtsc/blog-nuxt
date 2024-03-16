@@ -20,9 +20,9 @@ WORKDIR /usr/src/app
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
     --mount=type=cache,target=/root/.npm \
-    npm ci \
-    npm run build
+    npm ci 
 
+RUN npm run build
 ################################################################################
 # Create a new stage to run the application with minimal runtime dependencies
 # where the necessary files are copied from the build stage.
@@ -39,7 +39,7 @@ USER node
 
 # Copy the production dependencies from the deps stage and also
 # the built application from the build stage into the image.
-COPY --from=build /usr/src/app/output ./output
+COPY --from=build /usr/src/app/.output ./.output
 COPY --from=build /usr/src/app/ecosystem.config.cjs ./ecosystem.config.cjs
 
 RUN npm install pm2@latest -g
