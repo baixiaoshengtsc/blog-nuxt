@@ -20,12 +20,8 @@ WORKDIR /usr/src/app
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
     --mount=type=cache,target=/root/.npm \
-    npm ci
-
-# Copy the rest of the source files into the image.
-#COPY . .
-# Run the build script.
-RUN npm run build
+    npm ci \
+    npm run build
 
 ################################################################################
 # Create a new stage to run the application with minimal runtime dependencies
