@@ -10,24 +10,10 @@ ARG NODE_VERSION=18
 
 ################################################################################
 # Use node image for base image for all stages.
-FROM node:${NODE_VERSION}-alpine as base
+FROM node:${NODE_VERSION}-alpine as build
 
 # Set working directory for all build stages.
 WORKDIR /usr/src/app
-
-################################################################################
-# Create a stage for installing production dependecies.
-FROM base as deps
-
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.npm to speed up subsequent builds.
-# Leverage bind mounts to package.json and package-lock.json to avoid having to copy them
-# into this layer.
-RUN npm install pm2@latest -g
-
-################################################################################
-# Create a stage for building the application.
-FROM deps as build
 
 # Download additional development dependencies before building, as some projects require
 # "devDependencies" to be installed to build. If you don't need this, remove this step.
@@ -44,7 +30,7 @@ RUN npm run build
 ################################################################################
 # Create a new stage to run the application with minimal runtime dependencies
 # where the necessary files are copied from the build stage.
-FROM base as final
+FROM build as final
 
 # Use production node environment by default.
 ENV NODE_ENV production
@@ -57,8 +43,10 @@ USER node
 
 # Copy the production dependencies from the deps stage and also
 # the built application from the build stage into the image.
-#COPY --from=build /usr/src/app/output ./output
+COPY --from=build /usr/src/app/output ./output
+COPY --from=build /usr/src/app/ecosystem.config.cjs ./ecosystem.config.cjs
 
+RUN npm install pm2@latest -g
 
 # Expose the port that the application listens on.
 EXPOSE 3000
