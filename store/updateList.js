@@ -2,11 +2,15 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-29 23:37:56
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-03-01 15:48:18
+ * @LastEditTime: 2024-03-22 12:02:06
  * @FilePath: \blog-nuxt\store\updateList.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 export const updateList = [
+  {
+    time: '2024-3-22 v1.1',
+    msg: `由于信用卡发卡行结算故障，故4.0相关api暂时无法使用，请自行切换为3.5，预计3.22日晚间修复`
+  },
   {
     time: '2024-3-1 v1.1',
     msg: `报错样式恢复，根据openai错误码细分报错类型待开发`
