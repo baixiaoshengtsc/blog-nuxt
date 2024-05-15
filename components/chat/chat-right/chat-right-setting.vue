@@ -104,7 +104,11 @@ watch(() => props.active, () => {
 })
 const modelList = reactive([
   {
-    'name': 'GPT4-0125(最新慢)',
+    'name': 'GPT4o(不稳定，目前仅支持文字)',
+    value: 'gpt4o'
+  },
+  {
+    'name': 'GPT4-0125(最新)',
     value: 'gpt4Plus'
   },
   {
@@ -126,6 +130,7 @@ const openModel = () => {
 
 const handleEditTitle = () => {
   formData.system = dialogInput.value
+  dialogVisible.value = false
 }
 
 const handleSubmitConfig = () => {
