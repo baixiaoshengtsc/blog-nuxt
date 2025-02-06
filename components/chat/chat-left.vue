@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-18 18:10:53
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2025-02-06 15:55:07
+ * @LastEditTime: 2025-02-06 17:02:47
  * @FilePath: \blog-nuxt\components\chat\chat-left.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -62,6 +62,7 @@ watch(store.chatList, () => {
 }, { deep: true })
 const getChatType = (key: string) => {
   const obj: Record<string , any> = {
+    gpto1 : 'gpto1(推理模型)',
     dsR1 : 'Deepseek-R1(感谢⏰开源！)',
     dsV3 : 'Deepseek-v3(伟大，无需多言)',
     gpt4o : 'GPT4o(目前仅支持文字)',

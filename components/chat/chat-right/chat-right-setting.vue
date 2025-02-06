@@ -104,6 +104,10 @@ watch(() => props.active, () => {
 })
 const modelList = reactive([
   {
+    'name': 'gpto1(推理模型)',
+    value: 'gpto1'
+  },
+  {
     'name': 'Deepseek-R1(感谢⏰开源！)',
     value: 'dsR1'
   },
@@ -112,7 +116,7 @@ const modelList = reactive([
     value: 'dsV3'
   },
   {
-    'name': 'GPT4o(不稳定，目前仅支持文字)',
+    'name': 'GPT4o',
     value: 'gpt4o'
   },
   {

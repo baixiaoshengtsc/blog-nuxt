@@ -11,7 +11,9 @@
       </span>
     </div>
     <div class="deep-thinking-box-content" v-if="showContent">
-      {{ props.info }}
+      <p style="white-space: pre-wrap;">
+        {{ props.info }}
+      </p>
     </div>
   </div>
 </template>
