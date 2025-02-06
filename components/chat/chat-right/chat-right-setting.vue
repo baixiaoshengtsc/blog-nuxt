@@ -104,6 +104,14 @@ watch(() => props.active, () => {
 })
 const modelList = reactive([
   {
+    'name': 'Deepseek-R1(感谢⏰开源！)',
+    value: 'dsR1'
+  },
+  {
+    'name': 'Deepseek-v3(伟大，无需多言)',
+    value: 'dsV3'
+  },
+  {
     'name': 'GPT4o(不稳定，目前仅支持文字)',
     value: 'gpt4o'
   },

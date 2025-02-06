@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-19 00:48:01
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-07-17 15:49:53
+ * @LastEditTime: 2025-02-06 15:53:25
  * @FilePath: \blog-nuxt\store\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -19,6 +19,7 @@ interface dataListItem {
   type: 'user' | 'assistant'
   success: true | false | 'pending'
   content: string
+  deepThinkingContent?: string | null
   time: string
 }
 const dateNow = () => {
@@ -119,7 +120,7 @@ export const useChatList = defineStore('chatList', {
         nums: 0,
         temperature: 0.7,
         system: '你是一个专业的程序员',
-        type: 'gpt4o',
+        type: 'dsV3',
         maxLength: 12,
         pw: 'fefdc625-13a8-4a81-b82a-b0bf768eb5a1'
       }
@@ -161,7 +162,7 @@ export const useChatList = defineStore('chatList', {
       }, this.chatList)
       this.chatList[index].title = val
     },
-    setChatType(uid: string, val: 'gpt4Plus' | 'gpt4Img' | 'gpt4' | 'gpt3_5') {
+    setChatType(uid: string, val: 'gpt4Plus' | 'gpt4Img' | 'gpt4' | 'gpt3_5' | 'dsV3' | 'dsR1') {
       let index = getIndexUtil((item) => {
         return item.id === uid
       }, this.chatList)
@@ -205,6 +206,7 @@ export const useChatList = defineStore('chatList', {
       this.dataList[dataIndex].data.push({
         type: 'assistant',
         content: '',
+        deepThinkingContent: '',
         success: 'pending',
         time: ''
       })
@@ -218,7 +220,7 @@ export const useChatList = defineStore('chatList', {
         },
         body: JSON.stringify({
           option: this.activeChat,
-          history: this.activeData.data.filter(item => { return item.success !== 'pending' && item.success !== false }),
+          history: this.activeData.data.filter(item => { return item.success !== 'pending' && item.success !== false }).slice(-this.activeChat.maxLength),
           content: obj.content
         })
       })
@@ -233,12 +235,73 @@ export const useChatList = defineStore('chatList', {
           _this.dataList[dataIndex].data[assistantIndex].success = true
           _this.dataList[dataIndex].data[assistantIndex].time = dateNow()
           _this.chatList[chatIndex].latestDate = _this.dataList[dataIndex].data[userIndex].time
+          if(!_this.dataList[dataIndex].data[assistantIndex].content) {
+            if(_this.chatList[dataIndex].type === 'dsR1' || _this.chatList[dataIndex].type === 'dsV3') {
+              _this.dataList[dataIndex].data[assistantIndex].content = `
+  deepseek响应错误，卧槽洋人怎么这么坏！
+  > 
+  >  鸣大钟一次！
+  > 
+  >  推动杠杆，启动活塞和泵……
+  > 
+  >  鸣大钟两次！
+  > 
+  >  按下按钮，发动引擎，点燃涡轮，注入生命……
+  > 
+  >  鸣大钟三次！
+  > 
+  >  齐声歌唱，赞美万机之神！
+  >
+  ***如果排除以上问题且安抚机魂后仍报错，请联系作者(485434766)。***
+              `
+            }else {
+            _this.dataList[dataIndex].data[assistantIndex].content = `
+  openai响应错误，可能存在的问题如下：
+  -  如使用gpt4模型，请切换模型或者等待一分钟请求冷却后再试。
+  -  如非请求冷却问题请检查历史记录长度是否超标，请缩短设置历史记录长度后再次重试。
+  -  由于openai最近新发布视频模型，导致洋人的服务器被拉爆了，也有可能是单纯的openai服务器宕机。
+  > 
+  >  鸣大钟一次！
+  > 
+  >  推动杠杆，启动活塞和泵……
+  > 
+  >  鸣大钟两次！
+  > 
+  >  按下按钮，发动引擎，点燃涡轮，注入生命……
+  > 
+  >  鸣大钟三次！
+  > 
+  >  齐声歌唱，赞美万机之神！
+  >
+  ***如果排除以上问题且安抚机魂后仍报错，请联系作者(485434766)。***
+  `
+            }
+          }
           return;
         }
         const text = cache + reader.decode(value);
         if (text.indexOf('openai响应错误') !== -1) {
           _this.dataList[dataIndex].data[userIndex].success = false
           _this.dataList[dataIndex].data[assistantIndex].success = false
+          if(_this.chatList[dataIndex].type === 'dsR1' || _this.chatList[dataIndex].type === 'dsV3') {
+            _this.dataList[dataIndex].data[assistantIndex].content = `
+deepseek响应错误，卧槽洋人怎么这么坏！
+> 
+>  鸣大钟一次！
+> 
+>  推动杠杆，启动活塞和泵……
+> 
+>  鸣大钟两次！
+> 
+>  按下按钮，发动引擎，点燃涡轮，注入生命……
+> 
+>  鸣大钟三次！
+> 
+>  齐声歌唱，赞美万机之神！
+>
+***如果排除以上问题且安抚机魂后仍报错，请联系作者(485434766)。***
+            `
+          }else {
           _this.dataList[dataIndex].data[assistantIndex].content = `
 openai响应错误，可能存在的问题如下：
 -  如使用gpt4模型，请切换模型或者等待一分钟请求冷却后再试。
@@ -259,11 +322,13 @@ openai响应错误，可能存在的问题如下：
 >
 ***如果排除以上问题且安抚机魂后仍报错，请联系作者(485434766)。***
 `
+          }
           _this.dataList[dataIndex].data[assistantIndex].time = _this.dataList[dataIndex].data[userIndex].time
           _this.chatList[chatIndex].latestDate = _this.dataList[dataIndex].data[userIndex].time
           return
         }
         let data = text.split('data:')
+        console.log('接收到的chunk', data)
         data.forEach(item => {
           if (item.indexOf('DONE') !== -1) {
             return
@@ -273,6 +338,9 @@ openai响应错误，可能存在的问题如下：
                 const format = JSON.parse(item)
                 _this.dataList[dataIndex].data[userIndex].success = true
                 _this.dataList[dataIndex].data[assistantIndex].success = true
+                if (format.choices[0].delta?.reasoning_content) {
+                  _this.dataList[dataIndex].data[assistantIndex].deepThinkingContent += format.choices[0].delta?.reasoning_content
+                }
                 if (format.choices[0].delta?.content) {
                   _this.dataList[dataIndex].data[assistantIndex].content += format.choices[0].delta?.content
                 }

@@ -2,7 +2,7 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-18 18:10:53
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-02-21 12:05:24
+ * @LastEditTime: 2025-02-06 15:55:07
  * @FilePath: \blog-nuxt\components\chat\chat-left.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -17,7 +17,7 @@
     <div class="list">
       <div v-for="(item, i) in store.chatList" class="list-item"
         :class="{ active: activeNum === i, animate: i === 0 && isAnimate }" @click="handleClickChatItem(i)">
-        <div class="title">{{ item.title }}</div>
+        <div class="title">{{ item.title }} <span style="font-size: 11px;color:#817777;">{{getChatType(item.type)}}</span></div>
         <div class="message">
           <span class="num">{{ item.nums }}条对话</span>
           <span class="time">{{ item.latestDate }}</span>
@@ -60,6 +60,17 @@ watch(store.chatList, () => {
   }
   store.setActiveUid(store.chatList[activeNum.value].id)
 }, { deep: true })
+const getChatType = (key: string) => {
+  const obj: Record<string , any> = {
+    dsR1 : 'Deepseek-R1(感谢⏰开源！)',
+    dsV3 : 'Deepseek-v3(伟大，无需多言)',
+    gpt4o : 'GPT4o(目前仅支持文字)',
+    gpt4Plus : 'GPT4-0125',
+    gpt4 : 'GPT4-1106(QQ机器人同款)',
+    gpt3_5 : 'GPT3.5(最后一版3.5)',
+  }
+  return obj[key]
+}
 const handleAddChatItem = () => {
   store.addChatListItem()
   activeNum.value = 0

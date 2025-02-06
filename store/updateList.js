@@ -2,11 +2,15 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-29 23:37:56
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-05-15 11:26:17
+ * @LastEditTime: 2025-02-05 17:13:48
  * @FilePath: \blog-nuxt\store\updateList.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 export const updateList = [
+  {
+    time: '2025-2-6 v1.3',
+    msg: `deepseek已接入，默认模型为deepseek-V3！,deepseek-R1目前处于抽风状态，恢复时间未知!`
+  },
   {
     time: '2024-5-15 v1.2',
     msg: `正式发布一天后终于支持使用GPT4o进行对话了，更多功能等gpt教会我以后应该会上架！`
