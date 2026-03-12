@@ -2,21 +2,19 @@
  * @Author: baixiaoshengtsc 485434766@qq.com
  * @Date: 2024-02-19 12:26:52
  * @LastEditors: baixiaoshengtsc 485434766@qq.com
- * @LastEditTime: 2024-03-01 16:06:26
+ * @LastEditTime: 2025-02-06 15:20:46
  * @FilePath: \blog-nuxt\components\chat\chat-right\chat-right-container.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div class="chat-container" ref="chatRef">
-
-    
-
     <div class="card" v-for="(item, i) in props.list.data" :key="i" :class="{'assistant-card':item.type==='assistant', 'user-card':item.type==='user'}">
       <div class="chat-card">
         <div class="avatar">
           <el-image src="/img/gpt.svg" v-if="item.type==='assistant'"></el-image>
         </div>
         <div class="item">
+          <deep-thinking-box v-if="props.chat.type === 'dsR1' && item.type === 'assistant'" :info="item.deepThinkingContent"></deep-thinking-box>
           <span v-if="item.success === 'pending'&&item.type==='assistant'">...</span>
           <div class="md-preview" v-if="item.success === true&&item.type==='assistant'" v-html="formatMarked(item.content)"></div>
           <div class="md-preview" v-if="item.success === false&&item.type==='assistant'" v-html="formatMarked(item.content)"></div>
@@ -47,6 +45,7 @@
 </template>
 
 <script lang="ts" setup>
+import deepThinkingBox from './components/deep-thinking-box.vue';
 // @ts-ignore
 import marked from 'marked'
 // hljs 按需加载
@@ -91,11 +90,12 @@ hljs.registerLanguage("plaintext", plaintext);
 // import "highlight.js/styles/atom-one-dark.css";
 import "./highlight.less";
 
-import {ref, watch} from 'vue'
+import {ref, watch, computed} from 'vue'
 import { scrollBottom } from '../../../utils/dom';
 import { useChatList } from '../../../store/index'
 interface item {
   content: string
+  deepThinkingContent?: string | null
   success: 'pending' | true | false
   time: string
   type: 'user' | 'assistant'
@@ -105,6 +105,7 @@ interface list {
   data : item[]
 }
 interface Props {
+  chat: Record<string, any>,
   list: list,
   inputVal: string,
 }

@@ -19,6 +19,7 @@
     <div class="container">
       <chat-right-container v-bind="{
         list : store.activeData,
+        chat : store.activeChat,
         inputVal: inputVal,
       }"></chat-right-container>
     </div>
